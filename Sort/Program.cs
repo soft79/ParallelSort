@@ -27,13 +27,13 @@ do
         {
             // Column contains random numbers
             for (int j = 0; j < Arr.RowLength; ++j)
-                Arr[i][j] = new CVariant(RandomNumberGenerator.GetInt32(0, 10), j);
+                Arr[i][j] = new CVariant(RandomNumberGenerator.GetInt32(0, 10));
         }
         else
         {
             // Column contains random words
             for (int j = 0; j < Arr.RowLength; ++j)
-                Arr[i][j] = new CVariant(Words[RandomNumberGenerator.GetInt32(0, Words.Length)], j);
+                Arr[i][j] = new CVariant(Words[RandomNumberGenerator.GetInt32(0, Words.Length)]);
         }
     }
 

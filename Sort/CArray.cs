@@ -18,8 +18,25 @@
             get { return m_oData[iCol]; }
         }
 
+        public void ParallelUpdateAllRows()
+        {
+            Parallel.For(0, m_nCols, i =>
+            {
+                for (int j = 0; j < m_nRows; ++j)
+                    m_oData[i][j].UpdateRow(j);
+            });
+        }
+        public void UpdateAllRows()
+        {
+            for (int i = 0; i < m_nCols; ++i)
+                for (int j = 0; j < m_nRows; ++j)
+                    m_oData[i][j].UpdateRow(j);
+        }
+
         public void Sort(int iCol)
         {
+            UpdateAllRows();
+
             Array.Sort(m_oData[iCol]);
 
             for (int i = 0; i < m_nCols; ++i)
@@ -48,6 +65,8 @@
 
         public void ParallelSort(int iCol)
         {
+            ParallelUpdateAllRows();
+
             Array.Sort(m_oData[iCol]);
 
             Parallel.For(0, m_nCols, i =>

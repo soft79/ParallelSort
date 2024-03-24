@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System;
+using System.Text;
 
 namespace Sort
 {
@@ -20,20 +21,17 @@ namespace Sort
         private readonly Decimal[]? m_decVal = null;
         private readonly DateTime[]? m_dtVal = null;
         private readonly String[]? m_strVal = null;
-        private readonly int[]? m_arrRow = null;
-        private bool[]? m_bNull = null;
+        private readonly int[]? m_arrRow = new int[2];
+        private bool[]? m_bNull = new bool[] { false, false };
 
-        public CVariant(bool bNull)
-        {
-            m_bNull = new bool[] { bNull, bNull };
-        }
-        public CVariant(int iRow) : this(true)
+        public CVariant()
         {
             m_TypeCode = TypeCode.Empty;
-            m_arrRow = new int[] { iRow, iRow };
+            m_bNull[0] = true;
+            m_bNull[1] = true;
         }
 
-        public CVariant(TypeCode TypeCode, int iRow) : this(true)
+        public CVariant(TypeCode TypeCode)
         {
             m_TypeCode = TypeCode;
             switch (TypeCode)
@@ -101,99 +99,85 @@ namespace Sort
                 default:
                     break;
             }
-            m_arrRow = new int[] { iRow, iRow };
+            m_bNull[0] = true;
+            m_bNull[1] = true;
         }
-        public CVariant(Boolean boolVal, int iRow) : this(false)
+        public CVariant(Boolean boolVal)
         {
             m_TypeCode = TypeCode.Boolean;
             m_boolVal = new Boolean[] { boolVal, boolVal };
-            m_arrRow = new int[] { iRow, iRow };
         }
-        public CVariant(Char cVal, int iRow) : this(false)
+        public CVariant(Char cVal)
         {
             m_TypeCode = TypeCode.Char;
             m_cVal = new Char[] { cVal, cVal };
-            m_arrRow = new int[] { iRow, iRow };
         }
 
-        public CVariant(Byte byteVal, int iRow) : this(false)
+        public CVariant(Byte byteVal)
         {
             m_TypeCode = TypeCode.Byte;
             m_byteVal = new Byte[] { byteVal, byteVal };
-            m_arrRow = new int[] { iRow, iRow };
         }
 
-        public CVariant(SByte sbyteVal, int iRow) : this(false)
+        public CVariant(SByte sbyteVal)
         {
             m_TypeCode = TypeCode.SByte;
             m_sbyteVal = new SByte[] { sbyteVal, sbyteVal };
-            m_arrRow = new int[] { iRow, iRow };
         }
-        public CVariant(Int16 int16Val, int iRow) : this(false)
+        public CVariant(Int16 int16Val)
         {
             m_TypeCode = TypeCode.Int16;
             m_int16Val = new Int16[] { int16Val, int16Val };
-            m_arrRow = new int[] { iRow, iRow };
         }
-        public CVariant(UInt16 uint16Val, int iRow) : this(false)
+        public CVariant(UInt16 uint16Val)
         {
             m_TypeCode = TypeCode.UInt16;
             m_uint16Val = new UInt16[] { uint16Val, uint16Val };
-            m_arrRow = new int[] { iRow, iRow };
         }
-        public CVariant(Int32 int32Val, int iRow) : this(false)
+        public CVariant(Int32 int32Val)
         {
             m_TypeCode = TypeCode.Int32;
             m_int32Val = new Int32[] { int32Val, int32Val };
-            m_arrRow = new int[] { iRow, iRow };
         }
-        public CVariant(UInt32 uint32Val, int iRow) : this(false)
+        public CVariant(UInt32 uint32Val)
         {
             m_TypeCode = TypeCode.UInt32;
             m_uint32Val = new UInt32[] { uint32Val, uint32Val };
-            m_arrRow = new int[] { iRow, iRow };
         }
-        public CVariant(Int64 int64Val, int iRow) : this(false)
+        public CVariant(Int64 int64Val)
         {
             m_TypeCode = TypeCode.Int64;
             m_int64Val = new Int64[] { int64Val, int64Val };
-            m_arrRow = new int[] { iRow, iRow };
         }
-        public CVariant(UInt64 uint64Val, int iRow) : this(false)
+        public CVariant(UInt64 uint64Val)
         {
             m_TypeCode = TypeCode.UInt64;
             m_uint64Val = new UInt64[] { uint64Val, uint64Val };
-            m_arrRow = new int[] { iRow, iRow };
         }
-        public CVariant(Single fVal, int iRow) : this(false)
+        public CVariant(Single fVal)
         {
             m_TypeCode = TypeCode.Single;
             m_fVal = new Single[] { fVal, fVal };
-            m_arrRow = new int[] { iRow, iRow };
         }
-        public CVariant(Double dVal, int iRow) : this(false)
+        public CVariant(Double dVal)
         {
             m_TypeCode = TypeCode.Double;
             m_dVal = new Double[] { dVal, dVal };
-            m_arrRow = new int[] { iRow, iRow };
         }
-        public CVariant(Decimal decVal, int iRow) : this(false)
+        public CVariant(Decimal decVal)
         {
             m_TypeCode = TypeCode.Decimal;
             m_decVal = new Decimal[] { decVal, decVal };
-            m_arrRow = new int[] { iRow, iRow };
         }
-        public CVariant(DateTime dtVal, int iRow) : this(false)
+        public CVariant(DateTime dtVal)
         {
             m_TypeCode = TypeCode.DateTime;
             m_dtVal = new DateTime[] { dtVal, dtVal };
-            m_arrRow = new int[] { iRow, iRow };
         }
-        public CVariant(String strVal, int iRow) : this(false)
+        public CVariant(String strVal)
         {
             m_TypeCode = TypeCode.String;
             m_strVal = new String[] { strVal, strVal };
-            m_arrRow = new int[] { iRow, iRow };
         }
         public override string ToString()
         {
