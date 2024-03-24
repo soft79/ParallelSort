@@ -18,8 +18,8 @@ for (int j = 0; j < Arr.RowLength; ++j)
 {
     for (int i = 0; i < Arr.ColLength; ++i)
     {
-        Arr[i][j] = new CValue(RandomNumberGenerator.GetInt32(0, 9).ToString(), j);
-        Console.Write(string.Format("({0},{1})={2}\t", j, i, Arr[i][j].Value));
+        Arr[i][j] = new CVariant(RandomNumberGenerator.GetInt32(0, 9), j);
+        Console.Write(string.Format("({0},{1})={2}\t", j, i, Arr[i][j]));
     }
     Console.WriteLine();
 }
@@ -55,7 +55,7 @@ Console.WriteLine();
 for (int j = 0; j < Arr.RowLength; ++j)
 {
     for (int i = 0; i < Arr.ColLength; ++i)
-        Console.Write(string.Format("({0},{1})={2}\t", j, i, Arr[i][j].Value));
+        Console.Write(string.Format("({0},{1})={2}\t", j, i, Arr[i][j]));
     Console.WriteLine();
 }
 
