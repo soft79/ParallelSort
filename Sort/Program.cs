@@ -22,17 +22,12 @@ do
     // Fill in each cell with its row position value
     for (int i = 0; i < Arr.ColLength; ++i)
     {
-        int iRnd = RandomNumberGenerator.GetInt32(0, 2);
-        if (iRnd == 0)
+        // Column contains random numbers
+        for (int j = 0; j < Arr.RowLength; ++j)
         {
-            // Column contains random numbers
-            for (int j = 0; j < Arr.RowLength; ++j)
+            if (RandomNumberGenerator.GetInt32(0, 2) == 0)
                 Arr[i][j] = new CVariant(RandomNumberGenerator.GetInt32(0, 10));
-        }
-        else
-        {
-            // Column contains random words
-            for (int j = 0; j < Arr.RowLength; ++j)
+            else
                 Arr[i][j] = new CVariant(Words[RandomNumberGenerator.GetInt32(0, Words.Length)]);
         }
     }
@@ -97,7 +92,6 @@ do
 
     Console.WriteLine();
 
-    b = false;
     do
     {
         Console.Write("Again (Y/N): ");
