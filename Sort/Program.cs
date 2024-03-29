@@ -1,21 +1,20 @@
-﻿using Sort;
-using System.Security.Cryptography;
+﻿using System.Security.Cryptography;
 
 internal class Program
 {
-    private static void Print(CArray Arr)
+    private static void Print(object[,] Arr)
     {
-        for (int i = 0; i < Arr.ColLength; ++i)
+        for (int i = 0; i < Arr.ColLength(); ++i)
             Console.Write(string.Format("Col {0}\t", i + 1));
         Console.WriteLine();
-        for (int i = 0; i < Arr.ColLength; ++i)
+        for (int i = 0; i < Arr.ColLength(); ++i)
             Console.Write(string.Format("-------\t"));
         Console.WriteLine();
 
-        for (int j = 0; j < Arr.RowLength; ++j)
+        for (int j = 0; j < Arr.RowLength(); ++j)
         {
-            for (int i = 0; i < Arr.ColLength; ++i)
-                Console.Write(string.Format("{0}\t", Arr[i][j]));
+            for (int i = 0; i < Arr.ColLength(); ++i)
+                Console.Write(string.Format("{0}\t", Arr[j, i]));
             Console.WriteLine();
         }
         Console.WriteLine();
@@ -25,83 +24,77 @@ internal class Program
         Console.WriteLine("Hello, Array.Sort 2D!");
         Console.WriteLine();
 
-        string[] Words = {"Apple", "Orange", "Banana", "Onion", "Garlic", "Carrot", "Sun", "Moon", "Mercury",
-                "Venus", "Earth", "Mars", "Jupiter", "Saturn", "Uranus", "Neptune", "Pluto"};
+        object[,] Arr = new object[10, 10];
 
-        CArray Arr = new CArray(10, 10);
-
-        bool b;
-        do
+    again:
+        // Fill in each cell with its row position value
+        for (int i = 0; i < Arr.ColLength(); ++i)
         {
-            // Fill in each cell with its row position value
-            for (int i = 0; i < Arr.ColLength; ++i)
+            // Column contains random numbers
+            for (int j = 0; j < Arr.RowLength(); ++j)
             {
-                // Column contains random numbers
-                for (int j = 0; j < Arr.RowLength; ++j)
-                {
-                    if (RandomNumberGenerator.GetInt32(0, 2) == 0)
-                        Arr[i][j] = new CVariant(RandomNumberGenerator.GetInt32(0, 10));
-                    else
-                        Arr[i][j] = new CVariant(Words[RandomNumberGenerator.GetInt32(0, Words.Length)]);
-                }
+                Arr[j, i] = GetRandomValue();
             }
+        }
 
-            Print(Arr);
+        Print(Arr);
 
-            string? str;
-            int iColumn;
-            do
+        int iColumn;
+        while (true)
+        {
+            Console.Write(string.Format("Sort on column ({0}-{1}): ", 1, Arr.ColLength()));
+            var str = Console.ReadLine();
+            if (int.TryParse(str, out iColumn) && iColumn > 0 && iColumn <= Arr.ColLength()) break;
+        }
+
+        bool descending;
+        while (true)
+        {
+            Console.Write("Ascending or Descending (A/D): ");
+            var strSort = Console.ReadLine();
+            if (string.Compare(strSort, "A", true) == 0)
             {
-                Console.Write(string.Format("Sort on column ({0}-{1}): ", 1, Arr.ColLength));
-                str = Console.ReadLine();
-                b = int.TryParse(str, out iColumn);
-                if (b)
-                    b = iColumn > 0 && iColumn <= Arr.ColLength;
-            } while (!b);
-
-            b = false;
-            do
+                descending = false;
+                break;
+            }
+            else if (string.Compare(strSort, "D", true) == 0)
             {
-                Console.Write("Ascending or Descending (A/D): ");
-                string? strSort = Console.ReadLine();
-                if (string.Compare(strSort, "A", true) == 0)
-                {
-                    Global.g_bSortOrder = true;
-                    b = true;
-                }
-                else if (string.Compare(strSort, "D", true) == 0)
-                {
-                    Global.g_bSortOrder = false;
-                    b = true;
-                }
-            } while (!b);
+                descending = true;
+                break;
+            }
+        }
 
-            Console.WriteLine();
-            Console.WriteLine(string.Format("Sorting on Column {0} {1}", iColumn, Global.g_bSortOrder ? "Ascending" : "Descending"));
+        Console.WriteLine();
+        Console.WriteLine(string.Format("Sorting on Column {0} {1}", iColumn, descending ? "Descending" : "Ascending"));
 
-            // Sort
-            Arr.ParallelSort(iColumn - 1);
+        // Sort
+        Arr = Arr.Sort(iColumn - 1, descending);
 
-            Console.WriteLine();
+        Console.WriteLine();
 
-            Print(Arr);
+        Print(Arr);
 
-            do
-            {
-                Console.Write("Again (Y/N): ");
-                string? strAgain = Console.ReadLine();
-                if (string.Compare(strAgain, "Y", true) == 0)
-                {
-                    b = true;
-                    break;
-                }
-                else if (string.Compare(strAgain, "N", true) == 0)
-                {
-                    b = false;
-                    break;
-                }
-            } while (true);
-            Console.WriteLine();
-        } while (b);
+        while (true)
+        {
+            Console.Write("Again (Y/N): ");
+            var strAgain = Console.ReadLine();
+            if (string.Compare(strAgain, "Y", true) == 0) goto again;
+            if (string.Compare(strAgain, "N", true) == 0) break;
+        }
+        Console.WriteLine();
     }
+
+    private static readonly string[] Words = {
+        "Apple", "Orange", "Banana", "Onion", "Garlic", "Carrot", "Sun", "Moon", "Mercury",
+        "Venus", "Earth", "Mars", "Jupiter", "Saturn", "Uranus", "Neptune", "Pluto"
+    };
+
+    private static object GetRandomValue() => RandomNumberGenerator.GetInt32(0, 5) switch
+    {
+        0 => RandomNumberGenerator.GetInt32(-50, 100),
+        1 => Words[RandomNumberGenerator.GetInt32(0, Words.Length)],
+        2 => RandomNumberGenerator.GetInt32(-500, 1000) / 10.0,
+        3 => RandomNumberGenerator.GetInt32(2) == 0,
+        _ => (byte)RandomNumberGenerator.GetInt32(0, 100),
+    };
 }
