@@ -25,8 +25,8 @@ internal class Program
         Console.WriteLine("Hello, Array.Sort 2D!");
         Console.WriteLine();
 
-        string[] Words = {"Apple", "Orange", "Banana", "Onion", "Garlic", "Carrot", "Moon", "Mercury",
-                "Venus", "Earth", "Mars", "Saturn", "Uranus", "Neptune", "Pluto"};
+        string[] Words = {"Apple", "Orange", "Banana", "Onion", "Garlic", "Carrot", "Sun", "Moon", "Mercury",
+                "Venus", "Earth", "Mars", "Jupiter", "Saturn", "Uranus", "Neptune", "Pluto"};
 
         CArray Arr = new CArray(10, 10);
 
