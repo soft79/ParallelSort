@@ -240,7 +240,7 @@ namespace Sort
         {
             int iRet;
 
-            if (m_TypeCode == rhs.m_TypeCode)
+            if (m_TypeCode[0] == rhs.m_TypeCode[0])
             {
                 switch (m_TypeCode[0])
                 {
