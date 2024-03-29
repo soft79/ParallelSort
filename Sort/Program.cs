@@ -12,13 +12,6 @@ CArray Arr = new CArray(10, 10);
 bool b;
 do
 {
-    for (int i = 0; i < Arr.ColLength; ++i)
-        Console.Write(string.Format("Col {0}\t", i + 1));
-    Console.WriteLine();
-    for (int i = 0; i < Arr.ColLength; ++i)
-        Console.Write(string.Format("-------\t"));
-    Console.WriteLine();
-
     // Fill in each cell with its row position value
     for (int i = 0; i < Arr.ColLength; ++i)
     {
@@ -31,6 +24,13 @@ do
                 Arr[i][j] = new CVariant(Words[RandomNumberGenerator.GetInt32(0, Words.Length)]);
         }
     }
+
+    for (int i = 0; i < Arr.ColLength; ++i)
+        Console.Write(string.Format("Col {0}\t", i + 1));
+    Console.WriteLine();
+    for (int i = 0; i < Arr.ColLength; ++i)
+        Console.Write(string.Format("-------\t"));
+    Console.WriteLine();
 
     for (int j = 0; j < Arr.RowLength; ++j)
     {
@@ -89,7 +89,6 @@ do
             Console.Write(string.Format("{0}\t", Arr[i][j]));
         Console.WriteLine();
     }
-
     Console.WriteLine();
 
     do
